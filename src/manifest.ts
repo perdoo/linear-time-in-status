@@ -1,9 +1,9 @@
 import { defineManifest } from '@crxjs/vite-plugin'
 
 export default defineManifest({
-  name: 'create-chrome-ext',
+  name: 'linear-time-in-status',
   description: '',
-  version: '0.0.0',
+  version: '0.0.1',
   manifest_version: 3,
   icons: {
     '16': 'img/logo-16.png',
@@ -12,8 +12,9 @@ export default defineManifest({
     '128': 'img/logo-128.png',
   },
   action: {
-    default_popup: 'popup.html',
+    // default_popup: 'popup.html',
     default_icon: 'img/logo-48.png',
+    default_title: 'Linear time in status',
   },
   options_page: 'options.html',
   background: {
@@ -22,7 +23,7 @@ export default defineManifest({
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*'],
+      matches: ['https://linear.app/*'],
       js: ['src/content/index.ts'],
     },
   ],
@@ -32,5 +33,5 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: [],
+  permissions: ['storage'],
 })
