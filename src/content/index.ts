@@ -56,11 +56,20 @@ const fetchIssues = async () => {
   issues = json.data.issues.edges.map((edge: any) => edge.node) as IssueType[]
 }
 
+const countWeekDaysBetween = (startDate: Date, endDate: Date) =>
+  Array.from({ length: (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24) }).reduce(
+    (count: number) => {
+      if (startDate.getDay() % 6 !== 0) count++
+      startDate = new Date(startDate.setDate(startDate.getDate() + 1))
+      return count
+    },
+    0,
+  )
+
 const daysSince = (date: Date | string) => {
   const parsedDate = date instanceof Date ? date : new Date(date)
   const today = new Date()
-  const timeDelta = today.getTime() - parsedDate.getTime()
-  return Math.round(timeDelta / (1000 * 3600 * 24))
+  return countWeekDaysBetween(parsedDate, today)
 }
 
 const getIssueForElement = (element: Element) => {
